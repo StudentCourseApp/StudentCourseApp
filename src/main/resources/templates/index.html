@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+
+    <h2 th:if="${message}!=null" style="color:blue;"><span th:text="${message}"></span></h2>
+    <h2>This page is accessible by everyone in the world. It is "insecure".</h2>
+    <h2><a href="/secure">Here's the link to the secure section of the site!</a></h2>
+
+</body>
+</html>
