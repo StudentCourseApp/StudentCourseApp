@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     //******************************************************
 
     @Bean
-    public static BCryptPasswordEncoder passwordEncoder(){
+    public static BCryptPasswordEncoder passwordEncoder() {
         //******************************************************************************
         // creates an object that can be re-used to encode passwords in your application
         // this method is called to provide an instance of a BCryptPasswordEncoder
@@ -42,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         //*****************************************************************************
         // .authorizeRequest :: tells application which requests should be authorized
         // .and() :: adds additional authentication rules
@@ -60,35 +61,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ////       order matters!!
         ////       more specific access rules go last
         //http.authorizeRequests()
-                //.antMatchers("/").access("hasAnyAuthority('USER','ADMIN')")
-                //// regular 'USER' has access to all root directory
-                //.antMatchers("/admin").access("hasAuthority('ADMIN')")
-                //// 'ADMIN' has access to /admin directory
-                //.anyRequest().authenticated()
-                //// any request should be authenticated!...
-                //.and()
-                //.formLogin().loginPage("/login").permitAll()
-                //// everyone is allowed to login
-                //.and()
-                //.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll();
-                //// everyone is allowed to logout
+        //.antMatchers("/").access("hasAnyAuthority('USER','ADMIN')")
+        //// regular 'USER' has access to all root directory
+        //.antMatchers("/admin").access("hasAuthority('ADMIN')")
+        //// 'ADMIN' has access to /admin directory
+        //.anyRequest().authenticated()
+        //// any request should be authenticated!...
+        //.and()
+        //.formLogin().loginPage("/login").permitAll()
+        //// everyone is allowed to login
+        //.and()
+        //.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll();
+        //// everyone is allowed to logout
 
         // 404: adding the DATABASE LAYER to our SECURITY LAYER
         //      this is set up to allow the h2-console for the h2 database
         //      this code implements mySQL but all the h2 stuff is there and ready to go if needed
         http.authorizeRequests()
-                .antMatchers("/", "h2-console/**", "/register").permitAll()
-                // everyone is allowed to view root, h2-console, and registration page
+                .antMatchers("/", "h2-console/**", "/register", "/css/**", "/image/**").permitAll()
+                // everyone is allowed to view root, h2-console, registration page, and all static files
                 .antMatchers("/admin").access("hasAuthority('ADMIN')")
-                // 'ADMIN' has access to "/admin"
                 .anyRequest().authenticated()
-                // any request should be authenticated!...
                 .and()
-                .formLogin().loginPage("/login").permitAll()
-                // everyone is allowed to login
+                .formLogin().loginPage("/login").defaultSuccessUrl("/secure", true).permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll()
-                // everyone is allowed to logout
                 .and()
                 .httpBasic();
 
@@ -108,21 +105,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         //// 401-403: used this:
         //auth.inMemoryAuthentication()
-                ////******************************************************
-                //// when users are created, they can have at least one (or more!) "authorities" assigned to them.
-                //// these "authorities" can restrict the user even further
-                ////******************************************************
-                //// note: the passwordEncoder() method, below, is the one we defined as a static @Bean, above!
-                //// it simply returns a new BCryptPasswordEncoder on which we then call the encode() method to encode our password!
-                ////******************************************************
-                //.withUser("user").password(passwordEncoder().encode("password")).authorities("USER")
-                //.and()
-                //.withUser("rose").password(passwordEncoder().encode("lake")).authorities("ADMIN");
+        ////******************************************************
+        //// when users are created, they can have at least one (or more!) "authorities" assigned to them.
+        //// these "authorities" can restrict the user even further
+        ////******************************************************
+        //// note: the passwordEncoder() method, below, is the one we defined as a static @Bean, above!
+        //// it simply returns a new BCryptPasswordEncoder on which we then call the encode() method to encode our password!
+        ////******************************************************
+        //.withUser("user").password(passwordEncoder().encode("password")).authorities("USER")
+        //.and()
+        //.withUser("rose").password(passwordEncoder().encode("lake")).authorities("ADMIN");
 
         //404: uses this:
         auth.userDetailsService(userDetailsServiceBean()).passwordEncoder(passwordEncoder());
-            // userDetailsServiceBean() :: returns a new SSUserDetailsService built using the userRepository
-            // SSUserDetailsService passwordEncoder() method :: receives as parameter a new BCryptPasswordEncoder() from our local passwordEncoder method
+        // userDetailsServiceBean() :: returns a new SSUserDetailsService built using the userRepository
+        // SSUserDetailsService passwordEncoder() method :: receives as parameter a new BCryptPasswordEncoder() from our local passwordEncoder method
 
     }
 

@@ -1,27 +1,132 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Base</title>
+
+    <!-- my (one free) fontawesome kit link -->
+    <script src="https://kit.fontawesome.com/652790bb8a.js" crossorigin="anonymous"></script>
+
+    <!-- link to bootstrap cdn 11.21.19 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- personal style sheet link -->
+    <!-- commenting this out so that automatic scripts don't update it wrong. -->
+    <!-- you must lead with a slash (omit the "static" folder) and then what you need -->
+    <!--<link rel="stylesheet" th:href="@{/styles.css}">--> <!-- this is for a styles.css that's just in static -->
+    <!--<link rel="stylesheet" th:href="@{/css/styles.css}">--> <!--- this is for a styles.css that's in static/css/ -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!-- favicon link -->
+    <link rel="icon" type="image/png" href="">
+
 </head>
 
 <body>
 
-    <!-- th:fragments and code-snippets live here -->
+<main>
+
+    <!-- CODE SNIPPETS live here -->
 
     <!-- we now have included the dependency (thymeleaf-extras-springsecurity5) which allows you to use -->
-    <!-- <div sec:authorize="hasAuthority('ADMIN')"> -->
+    <div sec:authorize="hasAuthority('ADMIN')"></div>
     <!-- or -->
-    <!-- <div sec:authorize="hasAuthority('USER')"> -->
+    <div sec:authorize="hasAuthority('USER')"></div>
     <!-- or other -->
     <!-- in your html templates to show or not show a section based on user authorization -->
 
     <!-- this sort of code is useful for showing parts of navbars for specific users only!... -->
-    <span th:if="${user_id == course.user.id}">
-                    <a th:href="@{/update/{id}(id=${course.id})}">Update</a>
-                    <a th:href="@{/delete/{id}(id=${course.id})}">Delete</a>
-                </span>
-    <a th:href="@{/detail/{id}(id=${course.id})}">Details</a>
+    <!--<span th:if="${user_id == course.user.id}">
+                        <a th:href="@{/update/{id}(id=${course.id})}">Update</a>
+                        <a th:href="@{/delete/{id}(id=${course.id})}">Delete</a>
+                    </span>
+    <a th:href="@{/detail/{id}(id=${course.id})}">Details</a>-->
+
+
+    <!-- TH:FRAGMENTS live here -->
+
+    <!-- fragment NAVBAR -->
+    <div th:fragment="navbar">
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark justify-content-center">
+
+            <!-- BRAND icon :: using <img> or fontawesome's <i> tag -->
+            <!--
+                <a class="navbar-brand" th:href="@{/}">
+                    <img src="" class="" width="30" height="30" alt="brand logo">
+                </a>-->
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-peace"></i>
+            </a>
+
+            <!-- TOGGLER -->
+            <button class="navbar-toggler" type="button"
+                    data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- nav bar CENTERED TEXT -->
+            <div class="mx-auto d-block">
+                <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+
+                    <!-- the nav bar words -->
+                    <!-- ADD an object -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active mx-3">
+                            <a class="nav-link" href="/add">Add Job</a>
+                        </li>
+                    </ul>
+                    <!-- CENTER-CENTERED SEARCH form -->
+                    <!-- NOTE: there is no th:object in this form tag... therefore we need to use @RequestParam in HomeController -->
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="post">
+                        <input class="form-control form-control-sm mr-sm-2"
+                               type="search"
+                               placeholder="title, co, description"
+                               aria-label="Search title company or description"
+                               name="input">
+                        <button class="btn btn-sm btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <!-- VIEW ALL objects -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active mx-3">
+                            <a class="nav-link" href="/">View All<span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+            <!-- end nav CENTERED TEXT : all this stuff collapses, too -->
+        </nav>
+    </div>
+    <!-- end fragment NAVBAR -->
+
+</main>
+
+<!-- fragment FOOTER :: needs some basic css, for its "stickyness" -->
+<div th:fragment="footer">
+    <footer class="footer flex-column">
+        <small>&copy 2019 Rose Lake</small>
+    </footer>
+</div>
+
+
+<!-- fragment JAVASCRIPT-LINKS -->
+<!-- javascript links from BOOTSTRAP 11.21.19 -->
+<div th:fragment="javascript-links">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+</div>
+
 
 </body>
 

@@ -1,16 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login Page</title>
+
+    <!-- my (one free) fontawesome kit link -->
+    <script src="https://kit.fontawesome.com/652790bb8a.js" crossorigin="anonymous"></script>
+
+    <!-- link to bootstrap cdn 11.21.19 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- personal style sheet link -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!-- favicon link -->
+    <link rel="icon" type="image/png" href="">
+
 </head>
 <body>
 
     <h1>Login Page</h1>
-    <div th:if="${param.error}">
+    <div th:if="${param.error}" class="alert alert-info" role="alert">
         Invalid username or password
     </div>
-    <div th:if="${param.logout}">
+    <div th:if="${param.logout}" class="alert alert-warning" role="alert">
         You have been logged out
     </div>
     <form th:action="@{/login}" method="post">

@@ -2,13 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Root</title>
+
+    <!-- my (one free) fontawesome kit link -->
+    <script src="https://kit.fontawesome.com/652790bb8a.js" crossorigin="anonymous"></script>
+
+    <!-- link to bootstrap cdn 11.21.19 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- personal style sheet link -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!-- favicon link -->
+    <link rel="icon" type="image/png" href="">
+
 </head>
 <body>
 
-    <h2 th:if="${message}!=null" style="color:blue;"><span th:text="${message}"></span></h2>
-    <h2>This page is accessible by everyone in the world. It is "insecure".</h2>
-    <h2><a href="/secure">Here's the link to the secure section of the site!</a></h2>
+<div th:if="${message}!=null" class="alert alert-info" role="alert">
+    <span th:text="${message}"></span>
+</div>
+
+<h2>This page is accessible by everyone in the world. It is "insecure".</h2>
+
+<h2><a href="/secure">Here's the link to the secure section of the site!</a></h2>
 
 </body>
 </html>
