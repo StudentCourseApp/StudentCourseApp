@@ -16,7 +16,39 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<h1>Course Form</h1>
+<div th:replace="base ::navbar"></div>
+<div class="container container-form">
+    <div class="card border-0 shadow my-5">
+        <div class="card-body">
+            <h1 class="header-text">New Course</h1>
+            <form class="text-center" th:action="@{/processcourse}" th:object="${course}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}" />
+                <!-- Material input -->
+                <div class="input md-form form-group mt-5">
+                    <input type="text"th:field="*{name}" class="form-control" id="formGroupExampleInputMD" placeholder="English, Programming, Etc."/>
+                    <span th:if="${#fields.hasErrors('name')}"
+                          th:errors="*{name}"></span><br />
+                    <label class="text-primary">Course Name</label>
+                </div>
+                <!-- Material input -->
+                <div class="input md-form form-group mt-5">
+                    <input type="text" th:field="*{description}" class="form-control" id="formGroupExampleInput2MD" placeholder=""/>
+                    <span th:if="${#fields.hasErrors('description')}"
+                          th:errors="*{description}"></span><br />
+                    <label class="text-primary">Description</label>
+                </div>
+                <div class="input md-form form-group mt-5">
+                    <input type="text" th:field="*{faculty}" class="form-control" id="formGroupExampleInput3MD" placeholder="George Mark"/>
+                    <span th:if="${#fields.hasErrors('faculty')}"
+                          th:errors="*{faculty}"></span><br />
+                    <label class="text-primary">Faculty</label>
+                </div>
+
+                <button type="submit" class="btn btn-outline-info btn-rounded waves-effect "><i class="fas fa-plus pr-2"></i>Add</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div th:replace="base :: javascript-links"></div>
 </body>
