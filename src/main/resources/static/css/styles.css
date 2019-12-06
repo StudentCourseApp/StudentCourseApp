@@ -10,7 +10,6 @@ body {
     display: flex;                      /* sticky footer */
     flex-direction: column;             /* sticky footer */
 
-    padding-top: 80px!important;        /* push text/body below top-nav-bar */
 }
 .footer {
     flex-shrink: 0;                     /* sticky footer */
@@ -21,4 +20,5 @@ body {
 /* end sticky footer code */
 /* sticky footer from https://css-tricks.com/couple-takes-sticky-footer/  --  Thank you !! */
 /*******************************************************************************************/
+
 
