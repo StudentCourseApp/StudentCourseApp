@@ -22,11 +22,19 @@ public class HomeController {
     private UserService userService;
 
     @RequestMapping("/")
-    public String index(Model model){
+    public String landing(Model model){
+        return "landing";
+    }
+
+
+    @RequestMapping("/home")
+    public String home(Principal principal, Model model){
+        String username = principal.getName();
+        model.addAttribute("user", userRepository.findByUsername(username));
         if (userService.getUser() != null) {
             model.addAttribute("user_id", userService.getUser().getId());
         }
-        return "index";
+        return "home";
     }
 
     @RequestMapping("/login")
@@ -41,25 +49,7 @@ public class HomeController {
 
     }
 
-    @RequestMapping("/admin")
-    public String admin(Principal principal, Model model){
-        String username = principal.getName();
-        model.addAttribute("user", userRepository.findByUsername(username));
-        if (userService.getUser() != null) {
-            model.addAttribute("user_id", userService.getUser().getId());
-        }
-        return "admin";
-    }
 
-    @RequestMapping("/secure")
-    public String secure(Principal principal, Model model){
-        String username = principal.getName();
-        model.addAttribute("user", userRepository.findByUsername(username));
-        if (userService.getUser() != null) {
-            model.addAttribute("user_id", userService.getUser().getId());
-        }
-        return "secure";
-    }
 
     @GetMapping("/register")
     public String showRegistrationPage(Model model){
@@ -92,8 +82,22 @@ public class HomeController {
         model.addAttribute("message", "User Account Created");
         model.addAttribute("user", user);
         model.addAttribute("user_id", userService.getUser().getId());
-        return "index";
+        return "landing";
 
     }
+
+
+
+    // save for later
+    @RequestMapping("/admin")
+    public String admin(Principal principal, Model model){
+        String username = principal.getName();
+        model.addAttribute("user", userRepository.findByUsername(username));
+        if (userService.getUser() != null) {
+            model.addAttribute("user_id", userService.getUser().getId());
+        }
+        return "admin";
+    }
+
 
 }
