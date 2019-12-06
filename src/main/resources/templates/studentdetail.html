@@ -20,7 +20,26 @@
 </head>
 <body>
 <div th:replace="base ::navbar"></div>
-<h1>Student details</h1>
+
+<main role="main" class="container">
+    <div class="mx-auto">
+        <h1>Student details</h1>
+        <h3>Id: <span th:text="${student.id}"></span></h3>
+        <h3>First Name: <span th:text="${student.firstName}"></span></h3>
+        <h3>Last Name: <span th:text="${student.lastName}"></span></h3>
+        <h3>DOB: <span th:text="${student.dob}"></span></h3>
+        <h3 th:if="${student.image}!=''">
+            <img class="" th:src="${student.image}" alt="student image" />
+        </h3>
+        <h3>Courses: </h3>
+        <ul>
+            <li th:each="course : ${student.courses}" th:inline="text">
+                Course Name: [[${course.name}]] <br>
+                Faculty: [[${course.faculty}]] <br>
+            </li>
+        </ul>
+    </div>
+</main>
 
 <div th:replace="base:: footer"></div>
 <div th:replace="base :: javascript-links"></div>
