@@ -56,7 +56,7 @@ public class HomeControllerKsenia {
         }
 
         studentRepository.deleteById(id);
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/viewstudent/{id}")

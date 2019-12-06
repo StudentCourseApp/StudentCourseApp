@@ -22,36 +22,38 @@ public class HomeControllerSoheila {
     CourseRepository courseRepository;
 
     @GetMapping("/addcourse")
-    public String courseForm(Model model){
+    public String courseForm(Model model) {
         model.addAttribute("course", new Course());
         return "courseform";
     }
 
     @GetMapping("/editcourse/{id}")
-    public String editCourse(@PathVariable("id") Long id, Model model){
+    public String editCourse(@PathVariable("id") Long id, Model model) {
         model.addAttribute("course", courseRepository.findById(id).get());
         return "courseform";
     }
 
     @GetMapping("/deletecourse/{id}")
-    public String deleteCourse(@PathVariable("id") Long id, Model model){
+    public String deleteCourse(@PathVariable("id") Long id, Model model) {
         courseRepository.deleteById(id);
-        return "redirect:/";
+
+        return "redirect:/home";
     }
 
     @GetMapping("/viewcourse/{id}")
-    public String viewCourse(@PathVariable("id") Long id, Model model){
+    public String viewCourse(@PathVariable("id") Long id, Model model) {
         model.addAttribute("course", courseRepository.findById(id).get());
         return "coursedetail";
     }
 
     @PostMapping("/processcourse")
-    public String processCourse(@Valid @ModelAttribute Course course, BindingResult result){
-        if(result.hasErrors()){
+    public String processCourse(@Valid @ModelAttribute Course course, BindingResult result) {
+        if (result.hasErrors()) {
             return "courseform";
         }
         courseRepository.save(course);
-        return "redirect:/";
+        return "redirect:/home";
     }
+
 
 }
