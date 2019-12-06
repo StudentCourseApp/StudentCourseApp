@@ -19,8 +19,27 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>Course Details</h1>
-
+<header>
 <div th:replace="base :: javascript-links"></div>
+</header>
+
+<main role="main" class="container">
+   <div>
+       <h1>Course Details</h1>
+       <h3>Course Id: <span th:text="${course.id}"></span> </h3>
+       <h3>Course Name: <span th:text="${course.name}"></span> </h3>
+       <h3>Course Faculty: <span th:text="${course.faculty}"></span> </h3>
+       <h3>Course Description: <span th:text="${course.description}"></span> </h3>
+       <h3>Students: </h3>
+       <ul>
+           <li th:each="student : ${course.students}" th:inline="text">
+               First Name: [[${student.firstName}]] <br/>
+               Last Name: [[${student.lastName}]] <br/>
+           </li>
+       </ul>
+   </div>
+</main>
+
+
 </body>
 </html>
