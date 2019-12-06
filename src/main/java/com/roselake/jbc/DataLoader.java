@@ -23,12 +23,20 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... strings) throws Exception {
 
         if (roleRepository.count() == 0) {
+
+
+            //*******************************************
+            // Making Roles :: for Security Layer
+            //*******************************************
             roleRepository.save(new Role("USER"));
             roleRepository.save(new Role("ADMIN"));
-
             Role adminRole = roleRepository.findByRole("ADMIN");
             Role userRole = roleRepository.findByRole("USER");
 
+
+            //*******************************************
+            // Making Users :: for Security Layer
+            //*******************************************
             User faculty = new User("faculty", "faculty", "Kevin", "Cheung", "kevin@cheung.com", true);
             faculty.setRoles(Arrays.asList(userRole));
             userRepository.save(faculty);
@@ -37,10 +45,25 @@ public class DataLoader implements CommandLineRunner {
             user.setRoles(Arrays.asList(userRole));
             userRepository.save(user);
 
-//        User admin = new User("admin", "admin", "Admin", "Last", "admin@admin.com",true);
-//        admin.setRoles(Arrays.asList(adminRole));
-//        userRepository.save(admin);
+            // save for later :: project week and/or Monday's project ::
+            // this Data Loads a default admin user
+            //User admin = new User("admin", "admin", "Admin", "Last", "admin@admin.com",true);
+            //admin.setRoles(Arrays.asList(adminRole));
+            //userRepository.save(admin);
+
+
+            //*******************************************
+            // Making Courses ::
+            //      courses first, then students
+            //*******************************************
+
+            //*******************************************
+            // Making Students ::
+            //*******************************************
+
+
         }
 
     }
+
 }
