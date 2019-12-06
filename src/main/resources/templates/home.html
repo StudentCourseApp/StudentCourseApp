@@ -28,6 +28,41 @@
     <h2>Congratulations, <span th:text="${user.firstName}"></span>, you have successfully logged in! </h2>
 
 
+        <table class="table table-striped ">
+            <thead>
+            <tr class="center-text">
+                <th scope="col">Actions</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Faculty</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course: ${courses}">
+
+                <th scope="row"><div class="btn-group dropright">
+                    <button type="button" class="btn btn-primary">Show More</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle px-3" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/coursedetail">Course Details</a>
+                        <a class="dropdown-item" href="/studentdetail">Student Details</a>
+                        <a class="dropdown-item" href="/studentform">Edit Student</a>
+                    </div>
+                </div>
+                </th>
+                <td><span th:text="${course.name}"></span></td>
+                <td><span th:text="${course.description}"></span></td>
+                <td><span th:text="${course.faculty}"></span></td>
+
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
 <div th:replace="base :: javascript-links"></div>
 <div th:replace="base:: footer"></div>
 </body>
