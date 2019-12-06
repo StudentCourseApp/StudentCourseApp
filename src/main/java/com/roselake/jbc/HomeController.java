@@ -21,6 +21,12 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    CourseRepository courseRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
+
     @RequestMapping("/")
     public String landing(Model model){
         return "landing";
@@ -31,9 +37,8 @@ public class HomeController {
     public String home(Principal principal, Model model){
         String username = principal.getName();
         model.addAttribute("user", userRepository.findByUsername(username));
-        if (userService.getUser() != null) {
-            model.addAttribute("user_id", userService.getUser().getId());
-        }
+        model.addAttribute("courses", courseRepository.findAll());
+        model.addAttribute("students", studentRepository.findAll());
         return "home";
     }
 
