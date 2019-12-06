@@ -24,7 +24,7 @@
     <div class="mx-auto">
         <h1>Student Form</h1>
 
-        <form action="#" th:action="@{/processstudent}" th:object="${student}" method="post">
+        <form action="#" th:action="@{/processstudent}" th:object="${student}" method="post" enctype="multipart/form-data">
 
             <!-- my flag indicating whether we're editing or not :: "true" or "false" string -->
             <input hidden name="editing" th:value="${editing}"/>
@@ -54,6 +54,15 @@
                 <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
             </div>
 
+            <!-- DOB :: date input field-->
+            <div class="form-group d-flex">
+                <label for="dob" class="col-form-label col-3" >Date of Birth:</label>
+                <input type="dob"
+                       name="dob" id="dob"
+                       class="form-control col-9 mx-3"
+                       th:field="*{dob}"  />
+                <span th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></span>
+            </div>
 
             <!-- role :: ** MULTIPLE ** SELECT field -->
             <div class="form-group d-flex">
@@ -71,7 +80,7 @@
                             th:text="${course.name}"></option>
 
                     <!-- display this way if EDITING -->
-                    <option th:if="${editing} == 'true'" disabled> Select role(s)... </option>
+                    <option th:if="${editing} == 'true'" disabled> Select course(s)... </option>
                     <option th:if="${editing} == 'true'"
                             th:each="course:${allCourses}"
                             th:value="${course.name}"
@@ -79,32 +88,26 @@
                             th:selected="${student.courses.contains(course)}"></option>
 
                 </select>
-                <span th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></span>
-                <!-- NOTE: this is NOT an INPUT field... So this gets grabbed via RequestParam "selectRole" -->
-
+                <span th:if="${#fields.hasErrors('courses')}" th:errors="*{courses}"></span>
+                <!-- NOTE: this is NOT an INPUT field... So this gets grabbed via RequestParam "selectCourse" -->
             </div>
 
-            <!-- department :: single SELECT field -->
+
+            <!-- DISPLAY ONLY :: existing image and existing imageTitle -->
+            <!-- these are not form elements and do not get passed along on post -->
+            <div class="form-group d-flex" th:if="${student.image}!=''">
+                <label for="existingImage" class="col-form-label col-3">Existing Image:</label>
+                <img th:src="${student.image}" alt="message image"
+                     id="existingImage" class="col-9 mx-3 my-image-width"/>
+            </div>
+            <!-- image :: hidden pass-through field -->
+            <input hidden th:field="*{image}" />
+            <!-- image :: actual file input -->
             <div class="form-group d-flex">
-
-                <label for="selectDept" class="col-form-label col-3">Department: </label>
-
-                <!-- *** IMPORTANT :: the name of the select tag below SHOULD NOT overlap with the name of the th:field, -->
-                <!-- *** if it does, this will cause unwanted extra comma before our selection!... ahhhhh... -->
-
-                <select required id="selectDept" name="selectDeptName"
-                        class="form-control col-9 mx-3">
-                    <option th:if="${editing} == 'false'" selected value="">Select department...</option>
-                    <option th:if="${editing} == 'true'" disabled>Select department...</option>
-                    <option th:each="department : ${allDepartments}"
-                            th:value="${department.getName()}"
-                            th:inline="text"
-                            th:selected="(${user.department.name}==${department.name})">[[${department.name}]]: [[${department.description}]]
-                    </option>
-                </select>
-                <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></span>
-                <!-- NOTE: this is NOT an INPUT field... info is grabbed via RequestParam "selectDept" whose value is a department's name -->
-
+                <label for="file" class="col-form-label col-3">Image File:</label>
+                <input type="file"
+                       id="file" name="file"
+                       class="form-control-file col-9" >
             </div>
 
             <!-- oh yeah, SUBMIT -->
