@@ -73,6 +73,14 @@ public class Course {
         return students;
     }
 
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }
+
+    public void deleteStudent(Student student) {
+        this.students.remove(student);
+    }
+
     public void setStudents(Collection<Student> students) {
         this.students = students;
     }
