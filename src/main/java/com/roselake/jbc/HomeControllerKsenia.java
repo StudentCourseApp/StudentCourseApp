@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -54,7 +55,6 @@ public class HomeControllerKsenia {
                 }
             }
         }
-
         studentRepository.deleteById(id);
         return "redirect:/home";
     }
@@ -72,35 +72,16 @@ public class HomeControllerKsenia {
     }
 
     @PostMapping("/processstudent")
-    public String processStudent(@Valid @ModelAttribute Student student, BindingResult result, Model model){
+    public String processStudent(@Valid @ModelAttribute Student student, BindingResult result,
+                                 Model model,
+                                 @RequestParam("file") MultipartFile file){
+
+
+
+
         return "redirect:/home";
+
+
     }
 
 }
-
-//// SAMPLE SOURCE CODE ::
-//
-//    /* PROCESS a Department, either new or edited
-//     * redirect /home :: IF successful save of job, with or without an image
-//     * departmentform :: IF binding result has ERRORS */
-//    @PostMapping("/processdepartment")
-//    public String processDepartment(@Valid Department department, BindingResult result, Model model) {
-//
-//        if (result.hasErrors()) {
-//            // redisplay department form, this time with binding errors shown (via span th:if)
-//            return "departmentform";
-//        }
-//
-////        // taking this out!!! (will re-implement later. currently this causes problems on EDIT)
-////        // if you re-implement, try to do it on the @Binding side of things, by putting an @Unique on the field in the class.
-////        // check if the department exists ::
-////        if (departmentRepository.countByName(department.getName()) > 0){
-////            model.addAttribute("message", "Department '" + department.getName() + "' already exists!");
-////            return "departmentform";
-////        }
-//
-//        departmentRepository.save(department);
-//
-//        return "redirect:/home";           // redirect to home
-//
-//    }
