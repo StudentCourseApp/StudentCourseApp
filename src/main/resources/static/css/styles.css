@@ -21,4 +21,33 @@ body {
 /* sticky footer from https://css-tricks.com/couple-takes-sticky-footer/  --  Thank you !! */
 /*******************************************************************************************/
 
+/*****************Login**************/
+.bg{
+    text-align: center;
+
+    background:url(background-login.jpg) no-repeat center center fixed; /* Center and scale the image nicely */
+    /*full height*/
+    height:100%;
+
+    /*covers whole background in all browsers */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.login-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 100px;
+}
+.flex-fill {
+    flex:1;
+}
+
+.card-padding {
+    padding-top: 80px;
+}
+
+
+
 
