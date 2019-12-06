@@ -27,12 +27,16 @@ public class HomeControllerKsenia {
     @GetMapping("/addstudent")
     public String addStudent(Model model){
         model.addAttribute("student", new Student());
+        model.addAttribute("allCourses", courseRepository.findAll());
+        model.addAttribute("editing", "false");
         return "studentform";
     }
 
     @GetMapping("/editstudent/{id}")
     public String editStudent(@PathVariable("id") Long id, Model model){
         model.addAttribute("student", studentRepository.findById(id).get());
+        model.addAttribute("allCourses", courseRepository.findAll());
+        model.addAttribute("editing", "true");
         return "studentform";
     }
 
