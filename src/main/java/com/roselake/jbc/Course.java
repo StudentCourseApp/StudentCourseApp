@@ -3,7 +3,7 @@ package com.roselake.jbc;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Set;
+import java.util.Collection;
 
 @Entity
 public class Course {
@@ -25,7 +25,7 @@ public class Course {
     private String faculty;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Student> students;
+    private Collection<Student> students;
 
     public Course() { }
 
@@ -69,11 +69,11 @@ public class Course {
         this.faculty = faculty;
     }
 
-    public Set<Student> getStudents() {
+    public Collection<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<Student> students) {
+    public void setStudents(Collection<Student> students) {
         this.students = students;
     }
 }
